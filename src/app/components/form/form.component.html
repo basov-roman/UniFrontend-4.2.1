@@ -1,0 +1,134 @@
+<main class="main">
+  <div class="form-container">
+    <h1>Опитування</h1>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="faculty">На якому факультеті Ви навчаєтесь?</label>
+        <select id="faculty" formControlName="faculty" required>
+          <option value="faculty1">
+            Факультет Електроніки та комп'ютерний технологій
+          </option>
+          <option value="faculty2">Економічний факультет</option>
+          <option value="faculty3">Інший факультет</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Виберіть на якому курсі Ви навчаєтесь:</label>
+        <input
+          type="range"
+          min="1"
+          max="6"
+          value="1"
+          oninput="output.value = this.value"
+          required
+          formControlName="stream"
+        />
+        <output id="output">1</output>
+      </div>
+
+      <div class="form-group">
+        <label>Вкажіть групу:</label>
+        <input type="radio" formControlName="group" value="group1" required />
+        Група 1
+        <input type="radio" formControlName="group" value="group2" required />
+        Група 2
+      </div>
+
+      <div class="form-group">
+        <label for="subjects">
+          Які предмети Ви вивчаєте/вивчали? (Оберіть всі через Ctrl, якщо
+          потрібно)
+        </label>
+        <select id="subjects" formControlName="subjects" multiple required>
+          <option value="math">Вища математика</option>
+          <option value="oop">OOP</option>
+          <option value="web">Веб програмування на стороні клієнта</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="averageGrade">Вкажіть середній бал:</label>
+        <input
+          type="number"
+          id="averageGrade"
+          formControlName="averageGrade"
+          min="1"
+          max="5"
+          value="1"
+          oninput="validity.valid||(value='5');"
+          required
+        />
+      </div>
+
+      <div class="form-group" formArrayName="technologies">
+        <label>Вкажіть з якими технологіями мали досвід:</label>
+        <div *ngFor="let tech of technologies; let i = index">
+          <input type="checkbox" [formControlName]="i" [value]="tech" />
+          {{ tech }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="interviewTime"
+          >Виберіть зручний час для проходження співбесіди:</label
+        >
+        <input
+          type="datetime-local"
+          id="interviewTime"
+          formControlName="interviewTime"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="favoriteColor">Виберіть ваш улюблений ​​колір :)</label>
+        <input
+          type="color"
+          id="favoriteColor"
+          formControlName="favoriteColor"
+          value="#ff0000"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Введіть ваш email:</label>
+        <input type="email" id="email" required formControlName="email" />
+      </div>
+
+      <div class="form-group">
+        <label for="comments">Коментарі:</label>
+        <textarea
+          id="comments"
+          style="width: 300px; height: 70px; resize: none"
+          formControlName="comments"
+        ></textarea>
+      </div>
+
+      <button type="submit">Надіслати</button>
+    </form>
+  </div>
+
+  <div class="filter-results">
+    <h4>
+      Фільтрація тільки за факультетом Електроніки та комп'ютерний технологій
+    </h4>
+    <textarea id="filteredByFaculty" readonly></textarea>
+
+    <h4>Фільтрація за знаннями React.js, TypeScript, Redux</h4>
+    <textarea id="filteredByTechnologyExperience" readonly></textarea>
+
+    <h4>Фільтрація за балом вище ніж 2</h4>
+    <textarea id="filteredByAverageGrade" readonly></textarea>
+
+    <div class="buttons">
+      <button id="filterButton" (click)="getFilteredData()">
+        Фільтрувати та відобразити
+      </button>
+      <button id="localStorageClear" (click)="clearLocalStorage()">
+        Очистити Local Storage
+      </button>
+    </div>
+  </div>
+</main>
